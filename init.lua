@@ -1,0 +1,7 @@
+require("options")
+require("plugins")
+require("lsp")
+require("colorscheme")
+require("config/lualine")
+require("config/cmp")
+require("config/telescope")
