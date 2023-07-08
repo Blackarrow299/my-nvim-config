@@ -26,7 +26,8 @@ return require('packer').startup(function(use)
 
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+		config = function () require("config.lualine") end
   }
 
 	use { 'williamboman/mason.nvim' }
@@ -48,14 +49,18 @@ return require('packer').startup(function(use)
 
 	use {
 		"nvim-treesitter/nvim-treesitter",
-		config = function() require("nvim-treesitter.configs").setup {
+		config = function()
+			require("config.treesitter")
+			require("nvim-treesitter.configs").setup {
 			 ensure_installed = { "c", "lua", "python", "typescript" },
-		} end
+			}
+		end
 	}
 
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.2',
-		requires = { {'nvim-lua/plenary.nvim'} }
+		requires = { {'nvim-lua/plenary.nvim'} },
+		config = function () require("config.telescope") end
 	}
 
 	use {
@@ -66,7 +71,24 @@ return require('packer').startup(function(use)
     end,
   }
 
-  -- Automatically set up your configuration after cloning packer.nvim
+	use { "jose-elias-alvarez/null-ls.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+	}
+
+	use "rafamadriz/friendly-snippets"
+
+	use {
+    "jay-babu/mason-null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("config.null-ls")
+			require("mason-null-ls").setup {
+				handlers = {}
+			}
+    end
+	}
+
+	-- Automatically set up your configuration after cloning packer.nvim
   if packer_bootstrap then
     require('packer').sync()
   end

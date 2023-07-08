@@ -1,10 +1,9 @@
 -- Setup language servers.
 local lspconfig = require('lspconfig')
 
--- Servers Config Here
+-- servers here
 lspconfig.pyright.setup {}
 lspconfig.clangd.setup {}
-lspconfig.gopls.setup {}
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -54,8 +53,9 @@ require('mason').setup({
     }
 })
 
-require('mason-lspconfig').setup({
-    -- A list of servers to automatically install if they're not already installed
-    ensure_installed = { 'pyright', 'gopls', 'lua_ls', 'tsserver' },
-})
+require("mason-lspconfig").setup_handlers {
+	function (server_name) -- default handler (optional)
+    require("lspconfig")[server_name].setup {}
+  end,
+}
 
