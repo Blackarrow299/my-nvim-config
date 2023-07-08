@@ -14,14 +14,14 @@ local packer_bootstrap = ensure_packer()
 vim.cmd([[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost plugins.lua source plugins.lua | PackerCompile
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
   augroup end
 ]])
 
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   -- My plugins here
- 
+
   use "rebelot/kanagawa.nvim"
 
   use {
@@ -34,7 +34,7 @@ return require('packer').startup(function(use)
   use { 'williamboman/mason-lspconfig.nvim'}
 
   use 'neovim/nvim-lspconfig'
-  use { 'hrsh7th/nvim-cmp' }    
+  use { 'hrsh7th/nvim-cmp' }
   use { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' } 
   use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' }   -- buffer auto-completion
   use { 'hrsh7th/cmp-path', after = 'nvim-cmp' }          -- path auto-completion
@@ -87,6 +87,53 @@ return require('packer').startup(function(use)
 			}
     end
 	}
+
+	use {
+		'akinsho/bufferline.nvim',
+		tag = "*",
+		requires = 'nvim-tree/nvim-web-devicons',
+		config = function ()
+			require("config.bufferline")
+		end
+	}
+
+	use {
+		"lukas-reineke/indent-blankline.nvim",
+	}
+
+	use({
+		"utilyre/barbecue.nvim",
+		tag = "*",
+		requires = {
+			"SmiteshP/nvim-navic",
+			"nvim-tree/nvim-web-devicons", -- optional dependency
+		},
+		config = function()
+			require("barbecue").setup{
+				create_autocmd = false,
+			}
+			require("barbecue.ui").toggle(true)
+			vim.api.nvim_create_autocmd({
+				"WinResized",
+				"BufWinEnter",
+				"CursorHold",
+				"InsertLeave",
+			}, {
+				group = vim.api.nvim_create_augroup("barbecue.updater", {}),
+				callback = function()
+					require("barbecue.ui").update()
+				end,
+			})
+		end,
+	})
+
+	use({
+			"kylechui/nvim-surround",
+			tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+			config = function()
+					require("nvim-surround").setup{}
+			end
+	})
 
 	-- Automatically set up your configuration after cloning packer.nvim
   if packer_bootstrap then
