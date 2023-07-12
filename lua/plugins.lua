@@ -35,7 +35,7 @@ return require('packer').startup(function(use)
 
   use 'neovim/nvim-lspconfig'
   use { 'hrsh7th/nvim-cmp' }
-  use { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' } 
+  use { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' }
   use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' }   -- buffer auto-completion
   use { 'hrsh7th/cmp-path', after = 'nvim-cmp' }          -- path auto-completion
   use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' }       -- cmdline auto-completion
@@ -134,6 +134,50 @@ return require('packer').startup(function(use)
 					require("nvim-surround").setup{}
 			end
 	})
+
+	use {
+			'numToStr/Comment.nvim',
+			config = function()
+					require('Comment').setup()
+			end
+	}
+
+	use {
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function () require("todo-comments").setup() end
+	}
+
+	use({
+		"cappyzawa/trim.nvim",
+		config = function()
+			require("trim").setup({
+			  trim_on_write = true,
+				trim_trailing = true,
+				trim_last_line = true,
+				trim_first_line = true,
+			})
+		end
+	})
+
+	use {
+		'nvim-tree/nvim-tree.lua',
+		requires = {
+			'nvim-tree/nvim-web-devicons'
+		},
+		config = function () require("config.nvimtree") end
+	}
+
+	use {
+		"windwp/nvim-ts-autotag",
+		config = function () require("nvim-ts-autotag").setup() end
+	}
+
+
+	use {
+		"folke/which-key.nvim",
+		config = function () require("wichkey") end
+	}
 
 	-- Automatically set up your configuration after cloning packer.nvim
   if packer_bootstrap then
