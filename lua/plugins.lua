@@ -179,6 +179,9 @@ return require('packer').startup(function(use)
 		config = function () require("wichkey") end
 	}
 
+
+	use {"famiu/bufdelete.nvim"}
+
 	-- Automatically set up your configuration after cloning packer.nvim
   if packer_bootstrap then
     require('packer').sync()
