@@ -138,7 +138,12 @@ return require('packer').startup(function(use)
 	use {
 			'numToStr/Comment.nvim',
 			config = function()
-					require('Comment').setup()
+				require('Comment').setup()
+				vim.keymap.set('n', '<leader>/', function ()
+					require("Comment.api").toggle.linewise.current()
+				end)
+
+				vim.api.nvim_set_keymap('v', '<leader>/', "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { noremap = true, silent = true })
 			end
 	}
 

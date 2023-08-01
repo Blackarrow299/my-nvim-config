@@ -39,13 +39,13 @@ end
  end)
 
 -- next buffer
-vim.keymap.set("n", '<C-l>', function()
-	vim.api.nvim_command(':BufferLineMoveNext')
+vim.keymap.set("n", '<tab>', function()
+	vim.api.nvim_command(':BufferLineCycleNext')
 end)
 
 -- prev buffer
-vim.keymap.set("n", '<C-h>', function()
-	vim.api.nvim_command(':BufferLineMovePrev')
+vim.keymap.set("n", '<S-tab>', function()
+	vim.api.nvim_command(':BufferLineCyclePrev')
 end)
 
 -- show only modified buffers
