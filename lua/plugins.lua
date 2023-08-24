@@ -230,6 +230,14 @@ return require('packer').startup(function(use)
 		end
 	}
 
+	use 'Mr-LLLLL/interestingwords.nvim'
+	use {"lewis6991/gitsigns.nvim",
+		config = function ()
+			require('gitsigns').setup()
+		end
+	}
+	use 'tpope/vim-sleuth'
+
 	-- Automatically set up your configuration after cloning packer.nvim
   if packer_bootstrap then
     require('packer').sync()
